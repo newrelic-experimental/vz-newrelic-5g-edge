@@ -1,15 +1,37 @@
 [![New Relic Experimental header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#new-relic-experimental)
 
-# vz-newrelic-5g-edge [build badges go here when available]
+# vz-newrelic-5g-edge
 
->A Terraform module for deploying a multi-AZ EKS cluster leveraging Verizon’s 5G zones in AWS Wavelength. We are also experimenting with deploying both New Relic and Pixie using Terraform as part of this module.
+>A Terraform module for deploying a multi-AZ EKS cluster within Verizon’s 5G zones in AWS Wavelength. We are also experimenting with deploying both New Relic and Pixie using Terraform as part of this module.
 
 ## Installation
 
-> [Include a step-by-step procedure on how to get your code installed. Be sure to include any third-party dependencies that need to be installed separately]
+1. Fork the code repository for the [Pixie<>5G Edge Terraform module](https://github.com/bpschmitt/vz-newrelic-5gedge.git)
+
+```
+git clone https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git
+cd vz-newrelic-5g-edge
+```
+
+2. Next, initialize Terraform within your working directory and create a preview of your deployment changes.
+
+```
+terraform init
+terraform plan
+```
+
+3. Next, edit `terraform.tfvars.example` with any specific configuration details, such as your EKS cluster name, and specific Wavelength Zone(s) of interest. Note that you must login to your New Relic console and navigate to the Kubernetes Guided Install to retrieve your `nr_license_key`, `pixie_api_key`, and `pixie_deploy_key`.
+
+```
+mv terraform.tfvars.example terraform.tfvars
+```
+
+4. Apply the configuration by running `terraform apply.`
+
 
 ## Getting Started
->[Simple steps to start working with the software similar to a "Hello World"]
+
+To be completed
 
 ## Usage
 >## New Relic / Pixie 5G Edge Module
@@ -89,15 +111,6 @@
 No outputs.
 <!-- END_TF_DOCS -->
 
-
-## Building
-
->[**Optional** - Include this section if users will need to follow specific instructions to build the software from source. Be sure to include any third party build dependencies that need to be installed separately. Remove this section if it's not needed.]
-
-## Testing
-
->[**Optional** - Include instructions on how to run tests if we include tests with the codebase. Remove this section if it's not needed.]
-
 ## Support
 
 New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related Community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
@@ -105,7 +118,7 @@ New Relic hosts and moderates an online forum where customers can interact with 
 >Add the url for the support thread here
 
 ## Contributing
-We encourage your contributions to improve [project name]! Keep in mind when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. You only have to sign the CLA one time per project.
+We encourage your contributions to improve `vz-newrelic-5g-edge`. Keep in mind when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. You only have to sign the CLA one time per project.
 If you have any questions, or to execute our corporate CLA, required if your contribution is on behalf of a company,  please drop us an email at opensource@newrelic.com.
 
 **A note about vulnerabilities**
