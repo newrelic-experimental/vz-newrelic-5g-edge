@@ -13,6 +13,6 @@ cluster_name      = "wavelength-test"
 worker_key_name = "test_key"
 
 ### The values below can be obtained from the New Relic Guided Install for Kubernetes
-nr_license_key = ""
-pixie_api_key = ""
-pixie_deploy_key = ""
+#nr_license_key = ""
+#pixie_api_key = ""
+#pixie_deploy_key = ""
