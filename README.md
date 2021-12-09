@@ -9,7 +9,7 @@
 1. Fork the code repository for the [Pixie<>5G Edge Terraform module](https://github.com/bpschmitt/vz-newrelic-5gedge.git)
 
 ```
-git clone https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git
+git clone https://github.com/newrelic-experimental/vz-newrelic-5g-edge
 cd vz-newrelic-5g-edge
 ```
 
