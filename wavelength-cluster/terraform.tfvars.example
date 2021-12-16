@@ -1,4 +1,5 @@
 profile           = "default"
+region            = "us-east-1"
 cluster_name      = "wavelength-test"
 # wavelength_zone   = "us-east-1-wl1-dfw-wlz-1"
 # wavelength_zone_2 = "us-east-1-wl1-bos-wlz-1"

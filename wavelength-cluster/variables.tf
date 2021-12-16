@@ -18,7 +18,7 @@ variable "worker_key_name" {
 
 variable "cluster_name" {
   type    = string
-  default = "wavelength"
+  default = "wavelength-test"
 }
 
 # We use availability_zone_id for zone creation, and availability_zone for pod affinity
