@@ -8,36 +8,36 @@
 
 # enables newrelic-infrastructure
 infrastructure:
-  enabled: true
+  enabled: ${NR_BUNDLE_INFRA}
 
 # enables nri-prometheus
 prometheus:
-  enabled: false
+  enabled: ${NR_BUNDLE_PROMETHEUS}
 
 # enables nri-metadata-injection
 webhook:
-  enabled: false
+  enabled: ${NR_BUNDLE_WEBHOOK}
 
 # enables kube-state-metrics
 ksm:
-  enabled: true
+  enabled: ${NR_BUNDLE_KSM}
 
 # enables nri-kube-events
 kubeEvents:
-  enabled: true
+  enabled: ${NR_BUNDLE_KUBE_EVENTS}
 
 # enables newrelic-logging
 logging:
-  enabled: false
+  enabled: ${NR_BUNDLE_LOGGING}
 
 # enables newrelic-pixie
 newrelic-pixie:
-  enabled: true
+  enabled: ${NR_BUNDLE_PIXIE}
   #apiKey:
 
 # enables pixie-chart
 pixie-chart:
-  enabled: true
+  enabled: ${NR_BUNDLE_PIXIE_CHART}
   #deployKey:
   #clusterName:
   patches:
@@ -49,11 +49,11 @@ pixie-chart:
 
 # enables newrelic-infra-operator
 newrelic-infra-operator:
-  enabled: false
+  enabled: ${NR_BUNDLE_INFRA_OPERATOR}
 
 # enables newrelic-k8s-metrics-adapter
 metrics-adapter:
-  enabled: false
+  enabled: ${NR_BUNDLE_METRICS_ADAPTER}
 
 # IMPORTANT: the following values are set as global so that they
 # can be shared by other newrelic product's charts
@@ -113,7 +113,7 @@ metrics-adapter:
 #           - name: nri-redis
 #             env:
 #               # using the discovered IP as the hostname address
-#               HOSTNAME: ${discovery.ip}
+#               HOSTNAME: ip
 #               PORT: 6379
 #             labels:
 #               env: tes
