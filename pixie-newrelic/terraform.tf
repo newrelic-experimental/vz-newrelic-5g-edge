@@ -1,13 +1,15 @@
 terraform {
+  required_version = ">= 0.13"
   required_providers {
     helm = {
       source  = "hashicorp/helm"
       version = ">= 2.4.1"
     }
-  }
-}
 
-provider "aws" {
-  profile = var.profile
-  region  = var.region
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = ">= 2.7.1"
+    }
+
+  }
 }
