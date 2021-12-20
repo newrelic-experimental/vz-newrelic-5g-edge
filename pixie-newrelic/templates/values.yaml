@@ -2,9 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# global:
-#   licenseKey:
-#   cluster: wavelength-test
+global:
+  licenseKey: ${NR_LICENSE_KEY}
+  cluster: ${CLUSTER_NAME}
 
 # enables newrelic-infrastructure
 infrastructure:
@@ -33,19 +33,15 @@ logging:
 # enables newrelic-pixie
 newrelic-pixie:
   enabled: ${NR_BUNDLE_PIXIE}
-  #apiKey:
+  apiKey: ${NR_PIXIE_API_KEY}
 
 # enables pixie-chart
 pixie-chart:
   enabled: ${NR_BUNDLE_PIXIE_CHART}
-  #deployKey:
-  #clusterName:
-  patches:
-    kelvin: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
-    vizier-query-broker: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
-    vizier-cloud-connector: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
-    pl-nats: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
-    vizier-metadata: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
+  deployKey: ${NR_PIXIE_DEPLOY_KEY}
+  clusterName: ${NR_PIXIE_CLUSTER_NAME}
+  patches: 
+    ${PIXIE_PATCHES}
 
 # enables newrelic-infra-operator
 newrelic-infra-operator:
