@@ -34,13 +34,6 @@ provider "helm" {
   }
 }
 
-provider "kubernetes" {
-  #host                   = var.kubernetes_host_info["host"]
-  #cluster_ca_certificate = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
-  #token                  = var.kubernetes_host_info["token"]
-  config_path = var.kube_config_path
-}
-
 data "template_file" "pixie_values" {
   template = file("${path.module}/templates/values.yaml")
 
