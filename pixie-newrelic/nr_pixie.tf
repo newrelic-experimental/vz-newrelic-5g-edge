@@ -72,40 +72,43 @@ data "template_file" "pixie_values" {
 #     ]
 # }
 
-# resource "null_resource" "patch_coredns" {
-#   provisioner "local-exec" {
-#     command = "kubectl patch deployments coredns -n kube-system -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}'"
+resource "null_resource" "patch_coredns" {
+  count = var.patch_pixie ? 1 : 0
+  provisioner "local-exec" {
+    command = "kubectl patch deployments coredns -n kube-system -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}'"
 
-#     environment = {
-#       #KUBECONFIG = module.eks_cluster.kubeconfig_filename
-#       KUBECONFIG = "/Users/bschmitt/newrelic/git-repos/vz-newrelic-5g-edge/wavelength-cluster/kubeconfig_wavelength-test"
-#       KUBESERVER = var.kubernetes_host_info["host"]
-#       KUBETOKEN  = var.kubernetes_host_info["token"]
-#       KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
-#     }
-#   }
+    environment = {
+      #KUBECONFIG = module.eks_cluster.kubeconfig_filename
+      #KUBECONFIG = "/Users/bschmitt/newrelic/git-repos/vz-newrelic-5g-edge/wavelength-cluster/kubeconfig_wavelength-test"
+      KUBECONFIG = var.kube_config_path
+      # KUBESERVER = var.kubernetes_host_info["host"]
+      # KUBETOKEN  = var.kubernetes_host_info["token"]
+      # KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
+    }
+  }
 
-#   # depends_on = [
-#   #   aws_autoscaling_group.wavelength_workers
-#   # ]
-# }
+  # depends_on = [
+  #   aws_autoscaling_group.wavelength_workers
+  # ]
+}
 
-# resource "null_resource" "patch_pixie" {
-#   provisioner "local-exec" {
-#     command = "kubectl patch deployments newrelic-bundle-kube-state-metrics -n newrelic -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}' && kubectl patch deployments catalog-operator -n olm -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}' && kubectl patch deployments olm-operator -n olm -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}' && kubectl patch deployments vizier-operator -n px-operator -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}'"
+resource "null_resource" "patch_pixie" {
+  count = var.patch_pixie ? 1 : 0
+  provisioner "local-exec" {
+    command = "kubectl patch deployments newrelic-bundle-kube-state-metrics -n newrelic -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}' && kubectl patch deployments catalog-operator -n olm -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}' && kubectl patch deployments olm-operator -n olm -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}' && kubectl patch deployments vizier-operator -n px-operator -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}'"
 
-#     environment = {
-#       #KUBECONFIG = module.eks_cluster.kubeconfig_filename
-#       KUBECONFIG = "../wavelength-cluster/kubeconfig_wavelength-test"
-#       KUBESERVER = var.kubernetes_host_info["host"]
-#       KUBETOKEN  = var.kubernetes_host_info["token"]
-#       KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
-#     }
-#   }
-#   depends_on = [
-#     helm_release.newrelic
-#   ]
-# }
+    environment = {
+      #KUBECONFIG = module.eks_cluster.kubeconfig_filename
+      KUBECONFIG = var.kube_config_path
+      # KUBESERVER = var.kubernetes_host_info["host"]
+      # KUBETOKEN  = var.kubernetes_host_info["token"]
+      # KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
+    }
+  }
+  depends_on = [
+    helm_release.newrelic
+  ]
+}
 
 resource "null_resource" "apply_pixie" {
   provisioner "local-exec" {
