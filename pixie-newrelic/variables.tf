@@ -103,6 +103,12 @@ variable "nr_bundle_metrics_adapter" {
   default     = false
 }
 
+variable "patch_pixie" {
+  type        = bool
+  description = "Patch the nodes with Pixie Setting"
+  default     = false
+}
+
 ###### Kubernetes Host Info Mapping #######
 variable "kubernetes_host_info" {
   type = map(any)

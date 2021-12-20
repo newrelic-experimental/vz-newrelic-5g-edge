@@ -45,6 +45,7 @@ data "template_file" "pixie_values" {
   template = file("${path.module}/templates/values.yaml")
 
   vars = {
+    CLUSTER_NAME              = var.cluster_name
     NR_BUNDLE_INFRA           = var.nr_bundle_infra
     NR_BUNDLE_PROMETHEUS      = var.nr_bundle_prometheus
     NR_BUNDLE_WEBHOOK         = var.nr_bundle_webhook
@@ -55,6 +56,12 @@ data "template_file" "pixie_values" {
     NR_BUNDLE_PIXIE_CHART     = var.nr_bundle_pixie_chart
     NR_BUNDLE_INFRA_OPERATOR  = var.nr_bundle_infra_operator
     NR_BUNDLE_METRICS_ADAPTER = var.nr_bundle_metrics_adapter
+    PATCH_PIXIE               = var.patch_pixie
+    PIXIE_PATCHES             = var.patch_pixie ? "${indent(4, file("${path.module}/templates/pixie-patches.yaml"))}" : "{}"
+    NR_PIXIE_API_KEY          = var.nr_bundle_pixie ? var.pixie_api_key : ""
+    NR_PIXIE_DEPLOY_KEY       = var.nr_bundle_pixie_chart ? var.pixie_deploy_key : ""
+    NR_PIXIE_CLUSTER_NAME     = var.nr_bundle_pixie_chart ? var.cluster_name : ""
+    NR_LICENSE_KEY            = var.nr_license_key
   }
 }
 
@@ -142,28 +149,28 @@ resource "helm_release" "newrelic" {
     data.template_file.pixie_values.rendered
   ]
 
-  set {
-    name  = "global.licenseKey"
-    value = var.nr_license_key
-  }
+  # set {
+  #   name  = "global.licenseKey"
+  #   value = var.nr_license_key
+  # }
 
-  set {
-    name  = "global.cluster"
-    value = var.cluster_name
-  }
+  # set {
+  #   name  = "global.cluster"
+  #   value = var.cluster_name
+  # }
 
-  set {
-    name  = "newrelic-pixie.apiKey"
-    value = var.pixie_api_key
-  }
+  # set {
+  #   name  = "newrelic-pixie.apiKey"
+  #   value = var.pixie_api_key
+  # }
 
-  set {
-    name  = "pixie-chart.deployKey"
-    value = var.pixie_deploy_key
-  }
+  # set {
+  #   name  = "pixie-chart.deployKey"
+  #   value = var.pixie_deploy_key
+  # }
 
-  set {
-    name  = "pixie-chart.clusterName"
-    value = var.cluster_name
-  }
+  # set {
+  #   name  = "pixie-chart.clusterName"
+  #   value = var.cluster_name
+  # }
 }
