@@ -1,39 +1,3 @@
-# data "terraform_remote_state" "eks-cluster" {
-#   backend = "local"
-
-#   config = {
-#     path = "../wavelength-cluster/terraform.tfstate"
-#   }
-# }
-
-# data "aws_eks_cluster" "cluster" {
-#   name = var.eks_cluster_id
-# }
-
-# data "aws_eks_cluster_auth" "cluster" {
-#   name = var.eks_cluster_id
-# }
-
-# provider "aws" {
-#   region = var.region
-# }
-#  provider "helm" {
-#    kubernetes {
-#     host                   = data.aws_eks_cluster.eks.endpoint
-#     cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
-#     token                  = data.aws_eks_cluster_auth.eks.token
-#    }
-#  }
-
-provider "helm" {
-  kubernetes {
-    #host                   = var.kubernetes_host_info["host"]
-    #cluster_ca_certificate = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
-    #token                  = var.kubernetes_host_info["token"]
-    config_path = var.kube_config_path
-  }
-}
-
 data "template_file" "pixie_values" {
   template = file("${path.module}/templates/values.yaml")
 
@@ -145,28 +109,4 @@ resource "helm_release" "newrelic" {
     data.template_file.pixie_values.rendered
   ]
 
-  # set {
-  #   name  = "global.licenseKey"
-  #   value = var.nr_license_key
-  # }
-
-  # set {
-  #   name  = "global.cluster"
-  #   value = var.cluster_name
-  # }
-
-  # set {
-  #   name  = "newrelic-pixie.apiKey"
-  #   value = var.pixie_api_key
-  # }
-
-  # set {
-  #   name  = "pixie-chart.deployKey"
-  #   value = var.pixie_deploy_key
-  # }
-
-  # set {
-  #   name  = "pixie-chart.clusterName"
-  #   value = var.cluster_name
-  # }
 }
