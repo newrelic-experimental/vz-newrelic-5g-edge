@@ -1,3 +1,10 @@
+# provider "kubectl" {
+#   host                   = var.kubernetes_host_info["host"]
+#   cluster_ca_certificate = var.kubernetes_host_info["cluster_ca_certificate"]
+#   token                  = var.kubernetes_host_info["token"]
+#   load_config_file       = false
+# }
+
 data "template_file" "pixie_values" {
   template = file("${path.module}/templates/values.yaml")
 
@@ -36,6 +43,8 @@ data "template_file" "pixie_values" {
 #     ]
 # }
 
+# TODO: Wait for Nodes 
+
 resource "null_resource" "patch_coredns" {
   count = var.patch_pixie ? 1 : 0
   provisioner "local-exec" {
@@ -44,10 +53,10 @@ resource "null_resource" "patch_coredns" {
     environment = {
       #KUBECONFIG = module.eks_cluster.kubeconfig_filename
       #KUBECONFIG = "/Users/bschmitt/newrelic/git-repos/vz-newrelic-5g-edge/wavelength-cluster/kubeconfig_wavelength-test"
-      KUBECONFIG = var.kube_config_path
-      # KUBESERVER = var.kubernetes_host_info["host"]
-      # KUBETOKEN  = var.kubernetes_host_info["token"]
-      # KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
+      #KUBECONFIG = var.kube_config_path
+      KUBESERVER = var.kubernetes_host_info["host"]
+      KUBETOKEN  = var.kubernetes_host_info["token"]
+      KUBECA     = var.kubernetes_host_info["cluster_ca_certificate"]
     }
   }
 
@@ -63,10 +72,10 @@ resource "null_resource" "patch_pixie" {
 
     environment = {
       #KUBECONFIG = module.eks_cluster.kubeconfig_filename
-      KUBECONFIG = var.kube_config_path
-      # KUBESERVER = var.kubernetes_host_info["host"]
-      # KUBETOKEN  = var.kubernetes_host_info["token"]
-      # KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
+      #KUBECONFIG = var.kube_config_path
+      KUBESERVER = var.kubernetes_host_info["host"]
+      KUBETOKEN  = var.kubernetes_host_info["token"]
+      KUBECA     = var.kubernetes_host_info["cluster_ca_certificate"]
     }
   }
   depends_on = [
@@ -74,24 +83,37 @@ resource "null_resource" "patch_pixie" {
   ]
 }
 
-resource "null_resource" "apply_pixie" {
-  provisioner "local-exec" {
-    command = "kubectl apply -f https://download.newrelic.com/install/kubernetes/pixie/latest/px.dev_viziers.yaml && kubectl apply -f https://download.newrelic.com/install/kubernetes/pixie/latest/olm_crd.yaml"
-
-    environment = {
-      #KUBECONFIG = module.eks_cluster.kubeconfig_filename
-      #KUBECONFIG = "../wavelength-cluster/kubeconfig_wavelength-test
-      KUBECONFIG = var.kube_config_path
-      #KUBESERVER = var.kubernetes_host_info["host"]
-      #KUBETOKEN  = var.kubernetes_host_info["token"]
-      #KUBECA     = base64decode(var.kubernetes_host_info["cluster_ca_certificate"])
-    }
-  }
-  # depends_on = [
-  #   null_resource.patch_coredns
-  # ]
+resource "kubectl_manifest" "px_crd" {
+    yaml_body = file("${path.module}/templates/px.dev_viziers.yaml")
 }
 
+resource "kubectl_manifest" "catalogsources_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/catalogsources_operators_coreos_com.yaml")
+}
+
+resource "kubectl_manifest" "clusterserviceversions_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/clusterserviceversions_operators_coreos_com.yaml")
+}
+
+resource "kubectl_manifest" "installplans_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/installplans_operators_coreos_com.yaml")
+}
+
+resource "kubectl_manifest" "operatorconditions_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/operatorconditions_operators_coreos_com.yaml")
+}
+
+resource "kubectl_manifest" "operatorgroups_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/operatorgroups_operators_coreos_com.yaml")
+}
+
+resource "kubectl_manifest" "operators_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/operators_operators_coreos_com.yaml")
+}
+
+resource "kubectl_manifest" "subscriptions_operators_coreos_com" {
+    yaml_body = file("${path.module}/templates/subscriptions_operators_coreos_com.yaml")
+}
 
 resource "helm_release" "newrelic" {
   name             = "newrelic-bundle"
@@ -99,14 +121,19 @@ resource "helm_release" "newrelic" {
   chart            = "nri-bundle"
   namespace        = "newrelic"
   create_namespace = true
+
   depends_on = [
-    null_resource.apply_pixie
+    kubectl_manifest.px_crd,
+    kubectl_manifest.catalogsources_operators_coreos_com,
+    kubectl_manifest.clusterserviceversions_operators_coreos_com,
+    kubectl_manifest.installplans_operators_coreos_com,
+    kubectl_manifest.operatorconditions_operators_coreos_com,
+    kubectl_manifest.operatorgroups_operators_coreos_com,
+    kubectl_manifest.operators_operators_coreos_com,
+    kubectl_manifest.subscriptions_operators_coreos_com,
   ]
 
   values = [
-    #file("${path.module}/values-test.yaml")
-    #file("${path.module}/values.yaml")
     data.template_file.pixie_values.rendered
   ]
-
 }
