@@ -21,7 +21,6 @@ terraform {
   }
 }
 
-
 locals {
     cluster_name = "cluster_name"
 }

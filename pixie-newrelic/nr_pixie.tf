@@ -1,10 +1,3 @@
-# provider "kubectl" {
-#   host                   = var.kubernetes_host_info["host"]
-#   cluster_ca_certificate = var.kubernetes_host_info["cluster_ca_certificate"]
-#   token                  = var.kubernetes_host_info["token"]
-#   load_config_file       = false
-# }
-
 data "template_file" "pixie_values" {
   template = file("${path.module}/templates/values.yaml")
 
@@ -41,9 +34,7 @@ data "template_file" "pixie_values" {
 #     depends_on = [
 #       aws_autoscaling_group.wavelength_workers
 #     ]
-# }
-
-# TODO: Wait for Nodes 
+# } 
 
 resource "null_resource" "patch_coredns" {
   count = var.patch_pixie ? 1 : 0
