@@ -37,8 +37,8 @@ module "eks_cluster" {
   worker_create_cluster_primary_security_group_rules = true
 
   cluster_endpoint_private_access = true
-  cluster_endpoint_public_access = true
-  wait_for_cluster_timeout = 600
+  cluster_endpoint_public_access  = true
+  wait_for_cluster_timeout        = 600
 
   write_kubeconfig = true
 

@@ -1,4 +1,4 @@
-## EKS Wavelength 5G Edge Module
+## EKS Wavelength Cluster Module
 
 To be completed
 <!-- BEGIN_TF_DOCS -->
@@ -6,15 +6,13 @@ To be completed
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.40.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.62.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.40.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.70.0 |
 
 ## Modules
 
@@ -44,10 +42,6 @@ To be completed
 | [aws_subnet.region_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.wavelength_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.tf_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
-| [helm_release.newrelic](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [null_resource.apply_pixie](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.patch_coredns](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.patch_pixie](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [aws_eks_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_eks_cluster_auth.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
 
@@ -55,12 +49,9 @@ To be completed
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | n/a | `map` | <pre>{<br>  "az1": {<br>    "availability_zone_id": "use1-az1",<br>    "cidr_block": "10.0.1.0/24"<br>  },<br>  "az2": {<br>    "availability_zone_id": "use1-az2",<br>    "cidr_block": "10.0.2.0/24"<br>  }<br>}</pre> | no |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `"wavelength"` | no |
+| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | This is the Availability Zone (parent region) deployment metadata for your VPC, including Availability Zone and CIDR range for each AZ. | `map` | <pre>{<br>  "az1": {<br>    "availability_zone_id": "use1-az1",<br>    "cidr_block": "10.0.1.0/24"<br>  },<br>  "az2": {<br>    "availability_zone_id": "use1-az2",<br>    "cidr_block": "10.0.2.0/24"<br>  }<br>}</pre> | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `"wavelength-test"` | no |
 | <a name="input_node_group_s3_bucket_url"></a> [node\_group\_s3\_bucket\_url](#input\_node\_group\_s3\_bucket\_url) | This is the S3 object URL of the EKS node group with auto-attached Carrier IPs. | `string` | `"https://wavelengthtutorials.s3.amazonaws.com/wlz-eks-node-group.yaml"` | no |
-| <a name="input_nr_license_key"></a> [nr\_license\_key](#input\_nr\_license\_key) | New Relic License Key | `any` | n/a | yes |
-| <a name="input_pixie_api_key"></a> [pixie\_api\_key](#input\_pixie\_api\_key) | Pixie API Key found in New Relic Guided Install | `any` | n/a | yes |
-| <a name="input_pixie_deploy_key"></a> [pixie\_deploy\_key](#input\_pixie\_deploy\_key) | Pixie Deploy Key found in New Relic Guided Install | `any` | n/a | yes |
 | <a name="input_profile"></a> [profile](#input\_profile) | AWS Credentials Profile to use | `string` | `"default"` | no |
 | <a name="input_region"></a> [region](#input\_region) | This is the AWS region. | `string` | `"us-east-1"` | no |
 | <a name="input_require_imdsv2"></a> [require\_imdsv2](#input\_require\_imdsv2) | This is a bool whether to use AWS Instance Metadata Service Version 2 (IMDSv2). | `bool` | `true` | no |

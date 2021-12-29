@@ -82,18 +82,6 @@ variable "availability_zones" {
   }
 }
 
-# variable "availability_zone_1" {
-#   type        = string
-#   default     = "us-east-1a"
-#   description = "This is the first Availability Zone for the EKS control plane."
-# }
-
-# variable "availability_zone_2" {
-#   type        = string
-#   default     = "us-east-1b"
-#   description = "This is the second Availability Zone for the EKS control plane."
-# }
-
 variable "node_group_s3_bucket_url" {
   type        = string
   default     = "https://wavelengthtutorials.s3.amazonaws.com/wlz-eks-node-group.yaml"
@@ -146,15 +134,6 @@ variable "worker_nodegroup_name" {
 #   sensitive   = true
 # }
 
-# variable "domain" {
-#   default     = "lab.local"
-#   description = "This the Route53 domain name for your Confluent cluster."
-# }
-
-# variable "zoneid" {
-#   default     = "none"
-#   description = "This is the Route53 ZoneID of your Public Hosted Zone for your Confluent cluster."
-# }
 
 locals {
   ports_in = [
@@ -166,55 +145,3 @@ locals {
     0
   ]
 }
-
-
-# variable "wavelength_zone" {
-#   type        = string
-#   default     = "us-east-1-wl1-nyc-wlz-1"
-#   description = "This is the Wavelength Zone to deploy the EKS node group."
-# }
-
-# variable "wavelength_zone_2" {
-#   type        = string
-#   default     = "us-east-1-wl1-bos-wlz-1"
-#   description = "This is the second Wavelength Zone to deploy the EKS node group."
-# }
-
-# variable "wavelength_zone_3" {
-#   type        = string
-#   default     = "us-east-1-wl1-was-wlz-1"
-#   description = "This is the third Wavelength Zone to deploy the EKS node group."
-# }
-
-# variable "wavelength_zone_4" {
-#   type        = string
-#   default     = "us-east-1-wl1-atl-wlz-1"
-#   description = "This is the fourth Wavelength Zone to deploy the EKS node group."
-# }
-
-# variable "wavelength_zone_5" {
-#   type        = string
-#   default     = "us-east-1-wl1-mia-wlz-1"
-#   description = "This is the fifth Wavelength Zone to deploy the EKS node group."
-# }
-
-# variable "wlz1" {
-#   default     = false
-#   description = "Bool to determine deployment of second Wavelength Zone node group."
-# }
-# variable "wlz2" {
-#   default     = false
-#   description = "Bool to determine deployment of second Wavelength Zone node group."
-# }
-# variable "wlz3" {
-#   default     = false
-#   description = "Bool to determine deployment of third Wavelength Zone node group."
-# }
-# variable "wlz4" {
-#   default     = false
-#   description = "Bool to determine deployment of fourth Wavelength Zone node group."
-# }
-# variable "wlz5" {
-#   default     = false
-#   description = "Bool to determine deployment of fifth Wavelength Zone node group."
-# }

@@ -9,7 +9,7 @@ resource "aws_vpc" "tf_vpc" {
   }
 }
 
-# Create subnets in parent region; coredns and Pixie components run here
+# Create subnets in parent region; coredns and Pixie core components run here
 resource "aws_subnet" "region_subnets" {
   for_each = var.availability_zones
 
