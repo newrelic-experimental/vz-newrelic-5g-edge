@@ -1,55 +1,18 @@
-[![New Relic Experimental header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#new-relic-experimental)
-
-# vz-newrelic-5g-edge
-
->A Terraform module for deploying a multi-AZ EKS cluster within Verizon’s 5G zones in AWS Wavelength. We are also experimenting with deploying both New Relic and Pixie using Terraform as part of this module.
-
-## Installation
-
-1. Fork the code repository for the [Pixie<>5G Edge Terraform module](https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git)
-
-```
-git clone https://github.com/newrelic-experimental/vz-newrelic-5g-edge
-cd vz-newrelic-5g-edge
-```
-
-2. Next, initialize Terraform within your working directory and create a preview of your deployment changes.
-
-```
-terraform init
-terraform plan
-```
-
-3. Next, edit `terraform.tfvars.example` with any specific configuration details, such as your EKS cluster name, and specific Wavelength Zone(s) of interest. Note that you must login to your New Relic console and navigate to the Kubernetes Guided Install to retrieve your `nr_license_key`, `pixie_api_key`, and `pixie_deploy_key`.
-
-```
-mv terraform.tfvars.example terraform.tfvars
-```
-
-4. Apply the configuration by running `terraform apply.`
-
-
-## Getting Started
+## EKS Wavelength Cluster Module
 
 To be completed
-
-## Usage
->## New Relic / Pixie 5G Edge Module
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.40.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.62.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.40.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | n/a |
-| <a name="provider_null"></a> [null](#provider\_null) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.70.0 |
 
 ## Modules
 
@@ -79,10 +42,6 @@ To be completed
 | [aws_subnet.region_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.wavelength_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.tf_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
-| [helm_release.newrelic](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
-| [null_resource.apply_pixie](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.patch_coredns](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [null_resource.patch_pixie](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [aws_eks_cluster.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_eks_cluster_auth.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
 
@@ -90,12 +49,9 @@ To be completed
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | n/a | `map` | <pre>{<br>  "az1": {<br>    "availability_zone_id": "use1-az1",<br>    "cidr_block": "10.0.1.0/24"<br>  },<br>  "az2": {<br>    "availability_zone_id": "use1-az2",<br>    "cidr_block": "10.0.2.0/24"<br>  }<br>}</pre> | no |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `"wavelength"` | no |
+| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | This is the Availability Zone (parent region) deployment metadata for your VPC, including Availability Zone and CIDR range for each AZ. | `map` | <pre>{<br>  "az1": {<br>    "availability_zone_id": "use1-az1",<br>    "cidr_block": "10.0.1.0/24"<br>  },<br>  "az2": {<br>    "availability_zone_id": "use1-az2",<br>    "cidr_block": "10.0.2.0/24"<br>  }<br>}</pre> | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `string` | `"wavelength-test"` | no |
 | <a name="input_node_group_s3_bucket_url"></a> [node\_group\_s3\_bucket\_url](#input\_node\_group\_s3\_bucket\_url) | This is the S3 object URL of the EKS node group with auto-attached Carrier IPs. | `string` | `"https://wavelengthtutorials.s3.amazonaws.com/wlz-eks-node-group.yaml"` | no |
-| <a name="input_nr_license_key"></a> [nr\_license\_key](#input\_nr\_license\_key) | New Relic License Key | `any` | n/a | yes |
-| <a name="input_pixie_api_key"></a> [pixie\_api\_key](#input\_pixie\_api\_key) | Pixie API Key found in New Relic Guided Install | `any` | n/a | yes |
-| <a name="input_pixie_deploy_key"></a> [pixie\_deploy\_key](#input\_pixie\_deploy\_key) | Pixie Deploy Key found in New Relic Guided Install | `any` | n/a | yes |
 | <a name="input_profile"></a> [profile](#input\_profile) | AWS Credentials Profile to use | `string` | `"default"` | no |
 | <a name="input_region"></a> [region](#input\_region) | This is the AWS region. | `string` | `"us-east-1"` | no |
 | <a name="input_require_imdsv2"></a> [require\_imdsv2](#input\_require\_imdsv2) | This is a bool whether to use AWS Instance Metadata Service Version 2 (IMDSv2). | `bool` | `true` | no |
@@ -110,23 +66,3 @@ To be completed
 
 No outputs.
 <!-- END_TF_DOCS -->
-
-## Support
-
-New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related Community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
-
->Add the url for the support thread here
-
-## Contributing
-We encourage your contributions to improve `vz-newrelic-5g-edge`. Keep in mind when you submit your pull request, you'll need to sign the CLA via the click-through using CLA-Assistant. You only have to sign the CLA one time per project.
-If you have any questions, or to execute our corporate CLA, required if your contribution is on behalf of a company,  please drop us an email at opensource@newrelic.com.
-
-**A note about vulnerabilities**
-
-As noted in our [security policy](../../security/policy), New Relic is committed to the privacy and security of our customers and their data. We believe that providing coordinated disclosure by security researchers and engaging with the security community are important means to achieve our security goals.
-
-If you believe you have found a security vulnerability in this project or any of New Relic's products or websites, we welcome and greatly appreciate you reporting it to New Relic through [HackerOne](https://hackerone.com/newrelic).
-
-## License
-[Project Name] is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
->[If applicable: The [project name] also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the third-party notices document.]
