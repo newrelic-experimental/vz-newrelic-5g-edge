@@ -170,3 +170,18 @@ resource "aws_autoscaling_group" "region_workers" {
   ]
   ## Todo: auto scaling update policy: max batch 1, pause 5 minutes
 }
+
+# Patching CoreDNS so that it runs on nodes in the parent region. Nodes in Wavelength zones cannot communicate with one another.
+resource "null_resource" "patch_coredns" {
+  provisioner "local-exec" {
+    command = "kubectl patch deployments coredns -n kube-system -p '{\"spec\": {\"template\": {\"spec\": {\"nodeSelector\": {\"pixie.io/components\": \"true\"}}}}}'"
+
+    environment = {
+      KUBECONFIG = module.eks_cluster.kubeconfig_filename
+    }
+  }
+
+  depends_on = [
+    aws_autoscaling_group.wavelength_workers
+  ]
+}
