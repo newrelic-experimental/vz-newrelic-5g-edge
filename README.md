@@ -6,7 +6,7 @@
 
 ## Installation
 
-1. Fork the code repository for the [Pixie<>5G Edge Terraform module](https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git)
+1. Clone the repository for the [Pixie<>5G Edge Terraform module](https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git)
 
 ```
 git clone https://github.com/newrelic-experimental/vz-newrelic-5g-edge
