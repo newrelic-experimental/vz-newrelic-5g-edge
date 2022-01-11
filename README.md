@@ -31,9 +31,11 @@ mv terraform.tfvars.example terraform.tfvars
 terraform plan
 terraform apply
 ```
-## Sample Architecture Diagram
+## EKS Wavelength Reference Architecture
 
-> Coming soon!
+![EKS Wavelength Reference Architecture](./static/verizon_eks_reference_architecture.jpg)
+
+More at https://www.verizon.com/business/solutions/5g/edge-computing/developer-resources/edge-kubernetes-reference-architecture/
 
 ## Support
 
