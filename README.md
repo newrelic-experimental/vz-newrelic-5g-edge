@@ -17,7 +17,6 @@ cd vz-newrelic-5g-edge/wavelength-cluster
 
 ```
 terraform init
-terraform plan
 ```
 
 3. Next, edit `terraform.tfvars.example` with any specific configuration details, such as your EKS cluster name, and specific Wavelength Zone(s) of interest.
@@ -26,8 +25,15 @@ terraform plan
 mv terraform.tfvars.example terraform.tfvars
 ```
 
-4. Apply the configuration by running `terraform apply.`
+4. Apply the configuration:
 
+```
+terraform plan
+terraform apply
+```
+## Sample Architecture Diagram
+
+> Coming soon!
 
 ## Support
 
@@ -46,5 +52,4 @@ As noted in our [security policy](../../security/policy), New Relic is committed
 If you believe you have found a security vulnerability in this project or any of New Relic's products or websites, we welcome and greatly appreciate you reporting it to New Relic through [HackerOne](https://hackerone.com/newrelic).
 
 ## License
-[Project Name] is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
->[If applicable: The [project name] also uses source code from third-party libraries. You can find full details on which libraries are used and the terms under which they are licensed in the third-party notices document.]
+`vz-newrelic-5g-edge` is licensed under the [Apache 2.0](http://apache.org/licenses/LICENSE-2.0.txt) License.
