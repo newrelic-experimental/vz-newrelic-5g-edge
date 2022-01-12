@@ -30,6 +30,9 @@ ns_per_s = 1000 * ns_per_ms
 # Window size to use on time_ column for bucketing.
 window_ns = px.DurationNanos(10 * ns_per_s)
 
+'''
+Proof of Concept: Manually associate the Wavelength zone names with cluster nodes
+'''
 
 data = '''{
     "ip-10-0-10-93.ec2.internal": "us-east-1-wl1-nyc-wlz-1",
