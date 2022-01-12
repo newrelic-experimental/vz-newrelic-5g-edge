@@ -31,6 +31,55 @@ mv terraform.tfvars.example terraform.tfvars
 terraform plan
 terraform apply
 ```
+
+## Deploy Pixie and New Relic
+
+After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module`.
+
+1. Change directory to `pixie-newrelic`
+```
+cd ../pixie-newrelic
+terraform init
+```
+
+2. Update config variables for the `pixie_nr_module`.  Some defaults have been set but override them according to your preferences.  The `nr_license_key`, `pixie_api_key` and `pixie_deploy_key` variables must be set for a successful deployment.  These can be obtained from the New Relic Guided Install for Kubernetes UI.
+
+```
+module "pixie" {
+  source = "./pixie-nr-module"
+
+  nr_bundle_infra           = true
+  nr_bundle_prometheus      = false
+  nr_bundle_webhook         = false
+  nr_bundle_ksm             = true
+  nr_bundle_kube_events     = true
+  nr_bundle_logging         = false
+  nr_bundle_pixie           = true
+  nr_bundle_pixie_chart     = true
+  nr_bundle_infra_operator  = false
+  nr_bundle_metrics_adapter = false
+  patch_pixie               = true
+
+  nr_license_key   = "<NR LICENSE KEY>"
+  pixie_api_key    = "<PIXIE_API_KEY>"
+  pixie_deploy_key = "<PIXIE_DEPLOY_KEY>"
+  cluster_name     = local.cluster_name
+
+  kubernetes_host_info = {
+    host                   = data.aws_eks_cluster.cluster.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.cluster.token
+  }
+}
+```
+
+3. Deploy the integrations
+
+```
+terraform plan
+terraform apply
+```
+
 ## EKS Wavelength Reference Architecture
 
 ![EKS Wavelength Reference Architecture](./static/verizon_eks_reference_architecture.jpg)
