@@ -1,0 +1,5 @@
+kelvin: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
+vizier-query-broker: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
+vizier-cloud-connector: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
+pl-nats: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
+vizier-metadata: '{"spec": {"template": {"spec": { "nodeSelector": {"pixie.io/components": "true" }}}}}'
