@@ -46,7 +46,7 @@ terraform init
 
 2. Update config variables for the `pixie_nr_module`.  Some defaults have been set but feel free to override them according to your preferences.  The `nr_license_key`, `pixie_api_key` and `pixie_deploy_key` variables must be set for a successful deployment.  These can be obtained from the New Relic Guided Install for Kubernetes UI.
 
-NOTE: Currently, it's a pre-requisite to install the New Relic Infrastructure Daemonset in the cluster in addition to Pixie to enable the `Live Debugging with Pixie` tab in the New Relic UI.  [Community Cloud for Pixie](https://docs.px.dev/installing-pixie/install-guides/community-cloud-for-pixie/) can be installed if you'd prefer to leverage the Open Source version of Pixie.
+> NOTE: Currently, it's a pre-requisite to install the New Relic Infrastructure Daemonset in the cluster in addition to Pixie to enable the `Live Debugging with Pixie` tab in the New Relic UI.  [Community Cloud for Pixie](https://docs.px.dev/installing-pixie/install-guides/community-cloud-for-pixie/) can be installed if you'd prefer to leverage the Open Source version of Pixie.
 
 ```
 module "pixie" {
