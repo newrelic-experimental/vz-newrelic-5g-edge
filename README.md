@@ -36,6 +36,8 @@ terraform apply
 
 We've intentionally kept this install as a separate step due to issues with cleanly destroying the cluster outlined in this [github issue](https://github.com/hashicorp/terraform-provider-helm/issues/593).  After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module` in the `pixie-newrelic` directory.
 
+If you'd prefer to do a standard Helm install outside of Terraform, take a look at this [README](https://github.com/newrelic-experimental/vz-newrelic-5g-edge/blob/add-pixie-newrelic/pixie-newrelic/manual-install-README.md) for guidance.
+
 1. Change directory to `pixie-newrelic`
 ```
 cd ../pixie-newrelic
