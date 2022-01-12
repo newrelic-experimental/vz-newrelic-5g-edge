@@ -2,8 +2,43 @@ profile           = "default"
 region            = "us-east-1"
 cluster_name      = "wavelength-test"
 worker_key_name   = "test_key"
+worker_volume_size = 20
 
-### The values below can be obtained from the New Relic Guided Install for Kubernetes
-#nr_license_key = ""
-#pixie_api_key = ""
-#pixie_deploy_key = ""
+# Wavelength supports the following instances types for edge workloads:
+# t3.medium, t3.xlarge, and r5.2xlarge
+# ...for applications requiring cost-effective general purpose compute;
+worker_instance_type = "t3.xlarge"
+
+worker_image_id = {
+    "us-east-1" = "ami-0193ebf9573ebc9f7"
+    "us-west-2" = "ami-0bb07d9c8d6ca41e8"
+}
+worker_nodegroup_name = "Wavelength-Node-Group"
+
+wavelength_zones  = {
+    nyc = {
+        availability_zone    = "us-east-1-wl1-nyc-wlz-1",
+        availability_zone_id = "use1-wl1-nyc-wlz1",
+        worker_nodes         = 2,
+        cidr_block           = "10.0.10.0/24"
+        nodeport_offset      = 30100
+    },
+    bos = {
+        availability_zone    = "us-east-1-wl1-bos-wlz-1",
+        availability_zone_id = "use1-wl1-bos-wlz1",
+        worker_nodes         = 2,
+        cidr_block           = "10.0.11.0/24"
+        nodeport_offset      = 30200
+    }
+}
+
+availability_zones = {
+    az1 = {
+        availability_zone_id = "use1-az1"
+        cidr_block           = "10.0.1.0/24"
+    },
+    az2 = {
+        availability_zone_id = "use1-az2"
+        cidr_block           = "10.0.2.0/24"
+    }
+}
