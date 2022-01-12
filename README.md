@@ -34,7 +34,7 @@ terraform apply
 
 ## Deploy Pixie and New Relic
 
-We've intentionally kept this install as a separate step due to issues with cleaning destroying the cluster outlined in this [github issue](https://github.com/hashicorp/terraform-provider-helm/issues/593).  After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module` in the `pixie-newrelic` directory.
+We've intentionally kept this install as a separate step due to issues with cleanly destroying the cluster outlined in this [github issue](https://github.com/hashicorp/terraform-provider-helm/issues/593).  After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module` in the `pixie-newrelic` directory.
 
 1. Change directory to `pixie-newrelic`
 ```
