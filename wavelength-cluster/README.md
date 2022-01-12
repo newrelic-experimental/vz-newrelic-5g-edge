@@ -11,7 +11,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.70.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.71.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | 3.1.0 |
 
 ## Modules
@@ -65,5 +65,7 @@
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_cluster_name"></a> [cluster\_name](#output\_cluster\_name) | Cluster name |
 <!-- END_TF_DOCS -->
