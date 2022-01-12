@@ -6,20 +6,20 @@
 
 ## Installation
 
-1. Clone the repository for the [vz-newrelic-5g-edge module](https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git)
+1. Clone the [vz-newrelic-5g-edge](https://github.com/newrelic-experimental/vz-newrelic-5g-edge.git) repository.
 
 ```
 git clone https://github.com/newrelic-experimental/vz-newrelic-5g-edge
 cd vz-newrelic-5g-edge/wavelength-cluster
 ```
 
-2. Next, initialize Terraform within your working directory and create a preview of your deployment changes.
+2. Next, initialize Terraform within your working directory.
 
 ```
 terraform init
 ```
 
-3. Next, edit `terraform.tfvars.example` with any specific configuration details, such as your EKS cluster name, and specific Wavelength Zone(s) of interest.
+3. Edit `terraform.tfvars.example` with any specific configuration details, such as your EKS cluster name, and specific Wavelength Zone(s) of interest.
 
 ```
 mv terraform.tfvars.example terraform.tfvars
@@ -34,7 +34,7 @@ terraform apply
 
 ## Deploy Pixie and New Relic
 
-After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module` in the `pixie-newrelic` directory.
+We've intentionally kept this install as a separate step due to issues with cleaning destroying the cluster outlined in this [github issue](https://github.com/hashicorp/terraform-provider-helm/issues/593).  After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module` in the `pixie-newrelic` directory.
 
 1. Change directory to `pixie-newrelic`
 ```
@@ -48,17 +48,17 @@ terraform init
 module "pixie" {
   source = "./pixie-nr-module"
 
-  nr_bundle_infra           = true
-  nr_bundle_prometheus      = false
-  nr_bundle_webhook         = false
-  nr_bundle_ksm             = true
-  nr_bundle_kube_events     = true
-  nr_bundle_logging         = false
-  nr_bundle_pixie           = true
-  nr_bundle_pixie_chart     = true
-  nr_bundle_infra_operator  = false
-  nr_bundle_metrics_adapter = false
-  patch_pixie               = true
+  nr_bundle_infra           = true  # installs the New Relic Infrastructure Daemonset
+  nr_bundle_prometheus      = false # installs the New Relic Prometheus OpenMetrics Integration
+  nr_bundle_webhook         = false # installs the New Relic Metadata Injection Webhook
+  nr_bundle_ksm             = true  # installs Kube State Metrics
+  nr_bundle_kube_events     = true  # installs the New Relic Kubernetes Events Integration
+  nr_bundle_logging         = false # installs the New Relic Logs Integration (Fluent-Bit)
+  nr_bundle_pixie           = true  # installs the New Relic / Pixie Integration
+  nr_bundle_pixie_chart     = true  # installs the Pixie Operator
+  nr_bundle_infra_operator  = false # installs the New Relic Infrastructure Operator (Fargate-only)
+  nr_bundle_metrics_adapter = false # installs the New Relic Metrics Adapter
+  patch_pixie               = true  # enables the necessary patching so Pixie will run successfuly in a Wavelength cluster
 
   nr_license_key   = "<NR LICENSE KEY>"
   pixie_api_key    = "<PIXIE_API_KEY>"
