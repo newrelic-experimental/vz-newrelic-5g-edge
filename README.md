@@ -2,7 +2,7 @@
 
 # vz-newrelic-5g-edge
 
->A Terraform module for deploying a multi-AZ EKS cluster within Verizon’s 5G zones in AWS Wavelength. We are also experimenting with deploying both New Relic and Pixie using Terraform as part of this module.
+>A Terraform configuration for deploying a multi-AZ EKS cluster within Verizon’s 5G zones in AWS Wavelength. We are also experimenting with deploying both New Relic and Pixie using Terraform as part of this repo.
 
 ## Installation
 
@@ -34,7 +34,7 @@ terraform apply
 
 ## Deploy Pixie and New Relic
 
-After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module`.
+After the cluster has been successfully deployed, deploy Pixie and New Relic to the cluster using the `pixie_nr_module` in the `pixie-newrelic` directory.
 
 1. Change directory to `pixie-newrelic`
 ```
@@ -42,7 +42,7 @@ cd ../pixie-newrelic
 terraform init
 ```
 
-2. Update config variables for the `pixie_nr_module`.  Some defaults have been set but override them according to your preferences.  The `nr_license_key`, `pixie_api_key` and `pixie_deploy_key` variables must be set for a successful deployment.  These can be obtained from the New Relic Guided Install for Kubernetes UI.
+2. Update config variables for the `pixie_nr_module`.  Some defaults have been set but feel free to override them according to your preferences.  The `nr_license_key`, `pixie_api_key` and `pixie_deploy_key` variables must be set for a successful deployment.  These can be obtained from the New Relic Guided Install for Kubernetes UI.
 
 ```
 module "pixie" {
