@@ -84,7 +84,7 @@ variable "availability_zones" {
 
 variable "node_group_s3_bucket_url" {
   type        = string
-  default     = "https://yourcustomurl.s3.amazonaws.com/wlz-eks-node-group.yaml"
+  default     = "<YOUR S3 BUCKET URL>/wlz-eks-node-group.yaml"
   description = "This is the S3 object URL of the EKS node group with auto-attached Carrier IPs."
 }
 
